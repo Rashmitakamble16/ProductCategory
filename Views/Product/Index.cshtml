@@ -1,0 +1,73 @@
+﻿@model PaginatedList<ProCat.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (TempData["ResultOk"] != null)
+{
+    <h1 class="alert-success">@TempData["ResultOk"]</h1>
+}
+
+<div class="container shadow p-5">
+
+    <h1 class="text-center mb-3">Product List </h1>
+
+    <div class="col mb-3">
+        <a asp-controller="Product" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Add Product</a>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ProductId</th>
+                <th scope="col">ProductName</th>
+                <th scope="col">CategoryId</th>
+                <th scope="col">CategoryName</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="20%">
+                        @item.ProductId
+                    </td>
+                    <td width="20%">
+                        @item.ProductName
+                    </td>
+                    <td width="25%">
+                        @item.CategoryId
+                    </td>
+                    <td width="20%">
+                        @item.CategoryName
+                    </td>
+                    <td>
+                        <div role="group" class="w-60 btn-group">
+                            <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Edit</a>&nbsp;
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@{
+    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.NextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+    asp-route-pageNumber="@(Model.PageIndex - 1)"
+    class="btn-default @prevDisabled">
+    Previous&nbsp;&nbsp;&nbsp;
+</a>
+
+<a asp-action="Index"
+    asp-route-pageNumber="@(Model.PageIndex + 1)"
+    class="btn-default @nextDisabled">
+    Next
+</a>
