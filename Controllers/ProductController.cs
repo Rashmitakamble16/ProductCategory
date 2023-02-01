@@ -15,8 +15,6 @@ namespace ProCat.Controllers
         public async Task<IActionResult> Index(int pageNumber=1)
         {
             return View(await PaginatedList<Product>.CreateAsync(_context.Products, pageNumber,5));
-            //IEnumerable<Product> objCatlist = _context.Products;
-            //return View(objCatlist);
         }
 
         public IActionResult Create()
@@ -81,28 +79,6 @@ namespace ProCat.Controllers
 
             TempData["ResultOk"] = "Data Deleted Successfully !";
             return RedirectToAction("Index");
-
-            //if (procfromdb == null)
-            //{
-            //    return NotFound();
-            //}
-            //return View(procfromdb);
         }
-
-        //[HttpDelete]
-        //public IActionResult DeleteProd(int? id)
-        //{
-        //    var deleterecord = _context.Products.Find(id);
-        //    if (deleterecord == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _context.Products.Remove(deleterecord);
-        //    _context.SaveChanges();
-        //    TempData["ResultOk"] = "Data Deleted Successfully !";
-        //    return RedirectToAction("Index");
-        //}
-
-
     }
 }
